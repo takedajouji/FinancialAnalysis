@@ -7,11 +7,8 @@ class Stock(models.Model):
     last_price = models.FloatField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
         return self.symbol
-
-
 
 class StockHistory(models.Model):
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
@@ -22,12 +19,11 @@ class StockHistory(models.Model):
     def __str__(self):
         return f"{self.stock.symbol} - {self.timestamp}"
 
-
 class Portfolio(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Renamed from user_id to user
     stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     avg_price = models.FloatField()
 
     def __str__(self):
-        return f"{self.user_id} - {self.stock.symbol}"
+        return f"{self.user} - {self.stock.symbol}"
